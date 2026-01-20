@@ -4,7 +4,7 @@ An intelligent engineering assistant that helps engineers with real-time calcula
 
 ## 🎯 Overview
 
-Engineering Copilot is an AI-powered tool that acts as a smart assistant for mechanical, electrical, and civil engineers. It provides instant calculations, validates designs against engineering standards, suggests optimal materials, and generates professional documentation.
+Engineering AI Chatbot is an AI-powered tool that acts as a smart assistant for mechanical, electrical, and civil engineers. It provides instant calculations, validates designs against engineering standards, suggests optimal materials, and generates professional documentation.
 
 ## ✨ Features
 
