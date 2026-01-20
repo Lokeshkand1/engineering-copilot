@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Copilot - Smart Engineering Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛠️ Engineering Copilot</h1>
+            <p class="tagline">Your Intelligent Engineering Assistant</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab active" data-tab="beam">Beam Analysis</button>
+            <button class="tab" data-tab="column">Column Design</button>
+            <button class="tab" data-tab="materials">Material Selector</button>
+        </nav>
+
+        <!-- Beam Analysis Tab -->
+        <div class="tab-content active" id="beam-tab">
+            <h2>Beam Structural Analysis</h2>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Beam Type</label>
+                    <select id="beam-type">
+                        <option value="simply_supported">Simply Supported</option>
+                        <option value="cantilever">Cantilever</option>
+                        <option value="distributed">Distributed Load</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Material</label>
+                    <select id="beam-material">
+                        <option value="steel_a36">Steel A36</option>
+                        <option value="aluminum_6061">Aluminum 6061-T6</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Length (m)</label>
+                    <input type="number" id="beam-length" value="2.0" step="0.1" min="0.1">
+                </div>
+
+                <div class="form-group">
+                    <label>Load (N)</label>
+                    <input type="number" id="beam-load" value="1000" step="100" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Width (m)</label>
+                    <input type="number" id="beam-width" value="0.05" step="0.01" min="0.01">
+                </div>
+
+                <div class="form-group">
+                    <label>Height (m)</label>
+                    <input type="number" id="beam-height" value="0.1" step="0.01" min="0.01">
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="analyzeBeam()">Analyze Beam</button>
+
+            <div id="beam-results" class="results hidden">
+                <h3>Analysis Results</h3>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-label">Max Deflection</div>
+                        <div class="result-value" id="beam-deflection">-</div>
+                        <div class="result-unit">mm</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Max Stress</div>
+                        <div class="result-value" id="beam-stress">-</div>
+                        <div class="result-unit">MPa</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Safety Factor</div>
+                        <div class="result-value" id="beam-safety">-</div>
+                        <div class="result-unit"></div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Weight</div>
+                        <div class="result-value" id="beam-weight">-</div>
+                        <div class="result-unit">kg</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Cost</div>
+                        <div class="result-value" id="beam-cost">-</div>
+                        <div class="result-unit">USD</div>
+                    </div>
+                    <div class="result-card status" id="beam-status">
+                        <div class="result-label">Status</div>
+                        <div class="result-value">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column Analysis Tab -->
+        <div class="tab-content" id="column-tab">
+            <h2>Column Buckling Analysis</h2>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Material</label>
+                    <select id="column-material">
+                        <option value="steel_a36">Steel A36</option>
+                        <option value="aluminum_6061">Aluminum 6061-T6</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>End Condition</label>
+                    <select id="column-end">
+                        <option value="pinned-pinned">Pinned-Pinned</option>
+                        <option value="fixed-free">Fixed-Free</option>
+                        <option value="fixed-fixed">Fixed-Fixed</option>
+                        <option value="fixed-pinned">Fixed-Pinned</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Length (m)</label>
+                    <input type="number" id="column-length" value="3.0" step="0.1" min="0.1">
+                </div>
+
+                <div class="form-group">
+                    <label>Width (m)</label>
+                    <input type="number" id="column-width" value="0.1" step="0.01" min="0.01">
+                </div>
+
+                <div class="form-group">
+                    <label>Height (m)</label>
+                    <input type="number" id="column-height" value="0.1" step="0.01" min="0.01">
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="analyzeColumn()">Analyze Column</button>
+
+            <div id="column-results" class="results hidden">
+                <h3>Buckling Analysis Results</h3>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-label">Critical Load</div>
+                        <div class="result-value" id="column-load">-</div>
+                        <div class="result-unit">kN</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Slenderness Ratio</div>
+                        <div class="result-value" id="column-slenderness">-</div>
+                        <div class="result-unit"></div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Column Type</div>
+                        <div class="result-value" id="column-type">-</div>
+                        <div class="result-unit"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Materials Tab -->
+        <div class="tab-content" id="materials-tab">
+            <h2>Material Selection Assistant</h2>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Min. Yield Strength (MPa)</label>
+                    <input type="number" id="mat-strength" placeholder="e.g., 250">
+                </div>
+
+                <div class="form-group">
+                    <label>Max. Cost (USD/kg)</label>
+                    <input type="number" id="mat-cost" placeholder="e.g., 5.00" step="0.1">
+                </div>
+
+                <div class="form-group">
+                    <label>Min. Service Temp (°C)</label>
+                    <input type="number" id="mat-temp" placeholder="e.g., 200">
+                </div>
+
+                <div class="form-group">
+                    <label>Corrosion Resistance</label>
+                    <select id="mat-corrosion">
+                        <option value="">Any</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="good">Good</option>
+                        <option value="excellent">Excellent</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Optimize For</label>
+                    <select id="mat-optimize">
+                        <option value="cost">Lowest Cost</option>
+                        <option value="weight">Lowest Weight</option>
+                        <option value="strength">Highest Strength</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="recommendMaterial()">Find Best Material</button>
+
+            <div id="material-results" class="results hidden">
+                <h3>Recommended Material</h3>
+                <div id="material-card" class="material-details"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
