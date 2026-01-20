@@ -1,4 +1,4 @@
-# Engineering AI 🛠️
+# Engineering AI Chatbot 🛠️
 
 An intelligent engineering assistant that helps engineers with real-time calculations, design validation, material selection, and technical documentation generation.
 
