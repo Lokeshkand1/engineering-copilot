@@ -1,4 +1,4 @@
-# Engineering Copilot 🛠️
+# Engineering AI 🛠️
 
 An intelligent engineering assistant that helps engineers with real-time calculations, design validation, material selection, and technical documentation generation.
 
